@@ -1,0 +1,6 @@
+Revision history for Perl extension WWW::ConfixxBackup.
+
+0.01  Wed Feb 22 11:07:34 2006
+	- original version; created by h2xs 1.23 with options
+		-b 5.6.1 -XA -n WWW::ConfixxBackup
+
