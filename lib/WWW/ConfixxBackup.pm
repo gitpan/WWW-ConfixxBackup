@@ -6,7 +6,7 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new{
   my ($class) = @_;
@@ -115,9 +115,16 @@ sub backup_download{
   }
   if(defined $path && $self->{CONFIXX} && $self->{FTP}){
     $self->{CONFIXX}->backup();
+    sleep($self->{WAIT});
     $self->{FTP}->download($path);
   }
 }# backup_download
+
+sub waiter{
+    my ($self,$wait) = @_;
+    $self->{WAIT} = $wait if(defined $wait);
+    return $self->{WAIT};
+}# wait
 
 sub download{
   my ($self,$path) = @_;
@@ -160,7 +167,7 @@ WWW::ConfixxBackup - Create Backups with Confixx and download them via FTP
   $backup->backup_download($path);
   
   #longer way (and different Confixx and FTP login data)
-  my $backup = WWW::ConfixxBackup();
+  my $backup = WWW::ConfixxBackup->new();
   $backup->ftp_user('ftp_user');
   $backup->ftp_password('ftp_password');
   $backup->ftp_server('server');
@@ -171,6 +178,7 @@ WWW::ConfixxBackup - Create Backups with Confixx and download them via FTP
   $backup->confixx_login();
   $backup->backup();
   $backup->download($path);
+  $backup->wait($seconds);
 
 =head1 DESCRIPTION
 
@@ -270,6 +278,10 @@ are created by Confixx:
 
 to the given path. If path is omitted, the files are downloaded to the
 current directory.
+
+=head3 wait
+
+sets the value for the sleep-time in seconds
 
 =head1 SEE ALSO
 

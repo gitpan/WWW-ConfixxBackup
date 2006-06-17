@@ -6,7 +6,7 @@ use WWW::Mechanize;
 use HTTP::Cookies;
 use HTTP::Request;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new{
   my ($class,%args) = @_;
@@ -32,7 +32,7 @@ sub login{
   return 1;
 }# login
 
-sub create_backup{
+sub backup{
   my ($self) = @_;
   $self->mech->post($self->server . '/user/' . $self->user . '/tools_backup2.php',
                     {

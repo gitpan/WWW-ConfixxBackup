@@ -11,3 +11,4 @@ t/06_WWW_ConfixxBackup_online.t
 lib/WWW/ConfixxBackup.pm
 lib/WWW/ConfixxBackup/Confixx.pm
 lib/WWW/ConfixxBackup/FTP.pm
+META.yml                                 Module meta-data (added by MakeMaker)
