@@ -7,4 +7,7 @@ Revision history for Perl extension WWW::ConfixxBackup.
 0.02  Sat Jun 17 23:58:52 2006
     - bug fixed in WWW::ConfixxBackup::Confixx.pm
     - new method wait()
+    
+0.03  Tue Jun 20 20:04:33 2006
+    - bug in test script fixed
 

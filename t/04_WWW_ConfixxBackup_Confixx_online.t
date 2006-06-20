@@ -34,8 +34,6 @@ my $user = $hash{user} || $hash{confixx_user} || $hash{ftp_user} || $t_user;
 my $pwd = $hash{password} || $hash{confixx_password} || $hash{ftp_password} || $t_password;
 my $server = $hash{server} || $hash{confixx_server} || $t_server;
 
-print STDERR sprintf("%s :: %s :: %s",$user,$pwd,$server);
-
 $backup->user($user);
 $backup->password($pwd);
 $backup->server($server);
@@ -45,8 +43,8 @@ ok($backup->password eq $pwd);
 ok($backup->server eq $server);
 
 SKIP: {
-  skip "no internet connection",2 if(ref($backup->mech) ne 'WWW::Mechanize');
+  skip "could not connect to $server",2 if($server eq $t_server);
   
   ok($backup->login() == 1);
-  ok($backup->create_backup() == 1);
+  ok($backup->backup() == 1);
 }

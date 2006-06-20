@@ -23,7 +23,7 @@ ok($confixx->password eq 'password');
 my @methods = qw(
                   new
                   login
-                  create_backup
+                  backup
                   user
                   password
                   server

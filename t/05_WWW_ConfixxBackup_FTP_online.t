@@ -43,7 +43,7 @@ ok($backup->password eq $pwd);
 ok($backup->server eq $server);
 
 SKIP: {
-  skip "no internet connection",5 if(ref($backup->ftp) ne 'Net::FTP');
+  skip "could not connect to $server",5 if(ref($backup->ftp) ne 'Net::FTP');
   
   ok($backup->login() == 1);
   ok($backup->download() == 1);

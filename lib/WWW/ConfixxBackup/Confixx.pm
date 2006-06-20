@@ -5,7 +5,7 @@ use warnings;
 use WWW::Mechanize;
 use HTTP::Cookies;
 use HTTP::Request;
-
+use Data::Dumper;
 our $VERSION = '0.02';
 
 sub new{
@@ -83,7 +83,7 @@ sub mech{
 }# mech
 
 sub mech_warnings{
-  print STDERR "HALLO";
+ # print STDERR "HALLO";
 }# mech_warnings
 
 1;
