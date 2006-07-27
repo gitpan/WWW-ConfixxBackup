@@ -6,12 +6,14 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub new{
   my ($class) = @_;
   my $self = {};
   bless $self,$class;
+  
+  $self->waiter(120);
   
   return $self;
 }# new
@@ -81,8 +83,15 @@ sub confixx_password{
 
 sub login{
   my ($self) = @_;
-  $self->ftp_login or return undef;
-  $self->confixx_login or return undef;
+  $self->_reset_errstr;
+  $self->ftp_login or $self->add_errstr('' . $self->ftp_server);
+  $self->confixx_login or $self->add_errstr('' . $self->confixx_server);
+  
+  unless($self->errstr){
+      return 1;
+  }
+  
+  return 0;
 }# login
 
 sub ftp_login{
@@ -91,7 +100,9 @@ sub ftp_login{
                                               password => $self->ftp_password,
                                               server   => $self->ftp_server,
                                               );
-  return undef if(ref($self->{FTP}->ftp) ne 'Net::FTP');
+  $self->{FTP}->login;
+  
+  return if(ref($self->{FTP}->ftp) ne 'Net::FTP');
   return 1;
 }# ftp_login
 
@@ -101,24 +112,53 @@ sub confixx_login{
                                                       password => $self->confixx_password,
                                                       server   => $self->confixx_server,
                                                      );
-  return undef if(ref($self->{CONFIXX}->mech) ne 'WWW::Mechanize');
+  $self->{CONFIXX}->login;
+  
+  return if(ref($self->{CONFIXX}->mech) ne 'WWW::Mechanize');
   return 1;
 }# confixx_login
 
 sub backup_download{
   my ($self,$path) = @_;
+  
+  $path ||= '.';
+  $self->_reset_errstr();
+  
   unless($self->{CONFIXX}){
-    $self->confixx_login;
+    $self->confixx_login or $self->add_errstr('Can\'t login to Confixx');
   }
+  
   unless($self->{FTP}){
-    $self->ftp_login;
+    $self->ftp_login or $self->add_errstr('Can\'t login to FTP server');
   }
+  
   if(defined $path && $self->{CONFIXX} && $self->{FTP}){
-    $self->{CONFIXX}->backup();
+    $self->{CONFIXX}->backup() or $self->add_errstr('Can\'t create backup');
     sleep($self->{WAIT});
-    $self->{FTP}->download($path);
+    $self->{FTP}->download($path) or $self->add_errstr('Can\'t download');
   }
+  
+  unless($self->errstr){
+      return 1;
+  }
+  
+  return 0;
 }# backup_download
+
+sub _reset_errstr{
+    my ($self) = @_;
+    $self->{errstr} = '';
+}
+
+sub add_errstr{
+    my ($self,$msg) = @_;
+    $self->{errstr} .= $msg if(defined $msg);
+}
+
+sub errstr{
+    my ($self) = @_;
+    return $self->{errstr}."\n";
+}
 
 sub waiter{
     my ($self,$wait) = @_;
@@ -128,22 +168,42 @@ sub waiter{
 
 sub download{
   my ($self,$path) = @_;
+  
+  $self->_reset_errstr;
+  
   unless($self->{FTP}){
-    $self->ftp_login;
+    $self->ftp_login or 
+            $self->add_errstr('Can\'t login to FTP server' . $self->ftp_server);
   }
   if($self->{FTP}){
-    $self->{FTP}->download($path);
+    $self->{FTP}->download($path) or
+            $self->add_errst('Can\'t download backup files');
   }
+  
+  unless($self->errstr){
+      return 1;
+  }
+  return 0;
 }# download
 
 sub backup{
   my ($self) = @_;
+  
+  $self->_reset_errstr;
+  
   unless($self->{CONFIXX}){
-    $self->confixx_login;
+    $self->confixx_login or
+            $self->add_errstr('Can\'t login to Confixx' . $self->confixx_server);
   }
   if($self->{CONFIXX}){
-    $self->{CONFIXX}->backup;
+    $self->{CONFIXX}->backup or
+            $self->add_errstr('Can\'t create backup');
   }
+  
+  unless($self->errstr){
+      return 1;
+  }
+  return 0;
 }# backup
 
 

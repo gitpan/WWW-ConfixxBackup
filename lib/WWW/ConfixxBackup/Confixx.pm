@@ -5,8 +5,8 @@ use warnings;
 use WWW::Mechanize;
 use HTTP::Cookies;
 use HTTP::Request;
-use Data::Dumper;
-our $VERSION = '0.02';
+
+our $VERSION = '0.03';
 
 sub new{
   my ($class,%args) = @_;
@@ -22,11 +22,13 @@ sub new{
 
 sub login{
   my ($self) = @_;
+  
   if(ref($self->mech) eq 'WWW::Mechanize'){
     $self->mech->post($self->server . '/login.php',
                                  {username => $self->user, 
                                   password => $self->password,});
     $self->mech->get($self->server . '/user/' . $self->user . '/');
+        
     return 0 unless($self->mech->success);
   }
   return 1;
@@ -45,6 +47,7 @@ sub backup{
                       mysql        =>  1,
                     }
                   );
+  
   return 0 unless($self->mech->success);
   return 1;
 }# create_backup
@@ -77,13 +80,14 @@ sub mech{
                                     stack_depth => 1,
                                     cookie_jar  => $self->{cookie_jar},);
     $self->{mechanizer}->get($self->server);
+    
     return [] unless($self->{mechanizer}->success);
   }
   return $self->{mechanizer};
 }# mech
 
 sub mech_warnings{
- # print STDERR "HALLO";
+  #print STDERR "HALLO";
 }# mech_warnings
 
 1;
