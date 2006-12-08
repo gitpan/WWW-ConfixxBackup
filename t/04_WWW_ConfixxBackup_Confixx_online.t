@@ -8,11 +8,10 @@
 use Test::More tests => 7;
 use FindBin ();
 
-use WWW::ConfixxBackup::Confixx;
-ok(1); # If we made it this far, we're ok.
+use_ok('WWW::ConfixxBackup::Confixx');
 
 my $backup = WWW::ConfixxBackup::Confixx->new();
-ok(ref($backup) eq 'WWW::ConfixxBackup::Confixx');
+isa_ok($backup,'WWW::ConfixxBackup::Confixx');
 
 
 my $t_user           = 'username';

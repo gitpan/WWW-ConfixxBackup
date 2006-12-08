@@ -7,11 +7,10 @@
 
 use Test::More tests => 6;
 
-use WWW::ConfixxBackup;
-ok(1); # If we made it this far, we're ok.
+use_ok('WWW::ConfixxBackup');
 
 my $backup = WWW::ConfixxBackup->new();
-ok(ref($backup) eq 'WWW::ConfixxBackup');
+isa_ok($backup,'WWW::ConfixxBackup');
 
 $backup->user('username');
 $backup->password('password');
@@ -38,6 +37,8 @@ my @methods = qw(
                   ftp_login
                   confixx_login
                   login
+		  waiter
+		  errstr
                 );
 can_ok($backup,@methods);
 

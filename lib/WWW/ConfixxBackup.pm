@@ -6,7 +6,7 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub new{
   my ($class) = @_;
@@ -84,8 +84,8 @@ sub confixx_password{
 sub login{
   my ($self) = @_;
   $self->_reset_errstr;
-  $self->ftp_login or $self->add_errstr('' . $self->ftp_server);
-  $self->confixx_login or $self->add_errstr('' . $self->confixx_server);
+  $self->ftp_login or $self->_add_errstr('' . $self->ftp_server);
+  $self->confixx_login or $self->_add_errstr('' . $self->confixx_server);
   
   unless($self->errstr){
       return 1;
@@ -125,17 +125,17 @@ sub backup_download{
   $self->_reset_errstr();
   
   unless($self->{CONFIXX}){
-    $self->confixx_login or $self->add_errstr('Can\'t login to Confixx');
+    $self->confixx_login or $self->_add_errstr('Can\'t login to Confixx');
   }
   
   unless($self->{FTP}){
-    $self->ftp_login or $self->add_errstr('Can\'t login to FTP server');
+    $self->ftp_login or $self->_add_errstr('Can\'t login to FTP server');
   }
   
   if(defined $path && $self->{CONFIXX} && $self->{FTP}){
-    $self->{CONFIXX}->backup() or $self->add_errstr('Can\'t create backup');
+    $self->{CONFIXX}->backup() or $self->_add_errstr('Can\'t create backup');
     sleep($self->{WAIT});
-    $self->{FTP}->download($path) or $self->add_errstr('Can\'t download');
+    $self->{FTP}->download($path) or $self->_add_errstr('Can\'t download');
   }
   
   unless($self->errstr){
@@ -150,7 +150,7 @@ sub _reset_errstr{
     $self->{errstr} = '';
 }
 
-sub add_errstr{
+sub _add_errstr{
     my ($self,$msg) = @_;
     $self->{errstr} .= $msg if(defined $msg);
 }
@@ -308,6 +308,10 @@ creates a new C<WWW::ConfixxBackup> object.
 
 login on FTP server
 
+=head3 login
+
+login on Confixx server and FTP server
+
 =head3 backup
 
   $backup->backup();
@@ -339,9 +343,17 @@ are created by Confixx:
 to the given path. If path is omitted, the files are downloaded to the
 current directory.
 
-=head3 wait
+=head3 waiter
+
+  $backup->waiter(100);
 
 sets the value for the sleep-time in seconds
+
+=head3 errstr
+
+  print $backup->errstr();
+
+returns an error message when an error occured
 
 =head1 SEE ALSO
 

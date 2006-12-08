@@ -11,3 +11,9 @@ Revision history for Perl extension WWW::ConfixxBackup.
 0.03  Tue Jun 20 20:04:33 2006
     - bug in test script fixed
 
+0.05  Fri Dec 08 10:17:16 2006
+    - added: 97_manifest.t
+    - added: 98_boilerplate.t
+    - added: 99_pod.t
+    - added: 99_pod_coverage.t
+    - added: LICENSE field in Makefile.PL

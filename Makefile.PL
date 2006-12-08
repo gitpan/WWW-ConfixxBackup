@@ -29,4 +29,6 @@ WriteMakefile(
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/WWW/ConfixxBackup.pm', # retrieve abstract from module
        AUTHOR         => 'Renee Baecker <module@renee-baecker.de>') : ()),
+    ($ExtUtils::MakeMaker::VERSION >= 6.31 ?
+      (LICENSE        => 'perl') : ()),
 );
