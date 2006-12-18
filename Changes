@@ -17,3 +17,7 @@ Revision history for Perl extension WWW::ConfixxBackup.
     - added: 99_pod.t
     - added: 99_pod_coverage.t
     - added: LICENSE field in Makefile.PL
+
+0.06  Mon Dec 18 11:00:05 2006
+    - bugfix: 99_pod_coverage.t
+

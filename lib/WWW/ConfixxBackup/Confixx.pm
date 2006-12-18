@@ -112,7 +112,13 @@ WWW::ConfixxBackup::Confixx - the Confixx mechanism for WWW::ConfixxBackup
 
 =head2 server
 
-=head2
+=head2 backup
+
+=head2 mech_warnings
+
+=head2 mech
+
+=head2 login
 
 =head1 SEE ALSO
 

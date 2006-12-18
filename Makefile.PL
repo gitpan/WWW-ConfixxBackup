@@ -22,9 +22,10 @@ WriteMakefile(
     NAME              => 'WWW::ConfixxBackup',
     VERSION_FROM      => 'lib/WWW/ConfixxBackup.pm', # finds $VERSION
     PREREQ_PM         => {
-                           WWW::Mechanize => 0,
-                           Net::FTP       => 0,
-                           HTTP::Cookies  => 0,
+                           WWW::Mechanize      => 0,
+                           Net::FTP            => 0,
+                           HTTP::Cookies       => 0,
+                           Test::CheckManifest => 0.9,
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/WWW/ConfixxBackup.pm', # retrieve abstract from module

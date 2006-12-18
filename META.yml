@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                WWW-ConfixxBackup
-version:             0.05
+version:             0.06
 abstract:            Create Backups with Confixx and download them via FTP
 license:             perl
 generated_by:        ExtUtils::MakeMaker version 6.31
@@ -8,6 +8,7 @@ distribution_type:   module
 requires:     
     HTTP::Cookies:                 0
     Net::FTP:                      0
+    Test::CheckManifest:           0.9
     WWW::Mechanize:                0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.2.html
