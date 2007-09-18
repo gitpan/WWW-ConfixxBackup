@@ -6,14 +6,23 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub new{
-  my ($class) = @_;
+  my ($class,%args) = @_;
   my $self = {};
   bless $self,$class;
   
   $self->waiter(120);
+  
+  my @unwanted = (qr/login$/, qr/^backup/, qr/download$/, qr/^_/, qr/errstr/);
+  
+  for my $key ( keys %args ){
+      next if grep{ $key =~ $_ }@unwanted;
+      if( my $sub = $self->can( $key ) ){
+          $sub->( $self, $args{$key} );
+      }
+  }
   
   return $self;
 }# new
@@ -238,7 +247,7 @@ WWW::ConfixxBackup - Create Backups with Confixx and download them via FTP
   $backup->confixx_login();
   $backup->backup();
   $backup->download($path);
-  $backup->wait($seconds);
+  $backup->waiter($seconds);
 
 =head1 DESCRIPTION
 
@@ -323,9 +332,16 @@ Logs in to Confixx and creates the backups
   $backup->download('/path/to/directory');
 
 downloads the three files that are created by Confixx:
-  * mysql.tar.gz
-  * html.tar.gz
-  * files.tar.gz
+
+=over 4
+
+=item * mysql.tar.gz
+
+=item * html.tar.gz
+
+=item * files.tar.gz
+
+=back
 
 to the given path. If path is omitted, the files are downloaded to the
 current directory.
@@ -336,9 +352,16 @@ current directory.
 
 logs in to Confixx, create the backup files and downloads the three files that 
 are created by Confixx:
-  * mysql.tar.gz
-  * html.tar.gz
-  * files.tar.gz
+
+=over 4
+
+=item * mysql.tar.gz
+
+=item * html.tar.gz
+
+=item * files.tar.gz
+
+=back
 
 to the given path. If path is omitted, the files are downloaded to the
 current directory.

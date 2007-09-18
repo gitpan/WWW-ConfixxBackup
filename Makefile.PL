@@ -25,7 +25,7 @@ WriteMakefile(
                            WWW::Mechanize      => 0,
                            Net::FTP            => 0,
                            HTTP::Cookies       => 0,
-                           Test::CheckManifest => 0.9,
+                           Test::CheckManifest => 1.0,
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/WWW/ConfixxBackup.pm', # retrieve abstract from module

@@ -21,24 +21,24 @@ ok($backup->confixx_password eq 'password');
 ok($backup->server eq 'server');
 
 my @methods = qw(
-                  user
-                  password
-                  server
-                  ftp_user
-                  ftp_password
-                  ftp_server
-                  confixx_user
-                  confixx_password
-                  confixx_server
-                  backup
-                  download
-                  backup_download
-                  new
-                  ftp_login
-                  confixx_login
-                  login
-		  waiter
-		  errstr
-                );
+    user
+    password
+    server
+    ftp_user
+    ftp_password
+    ftp_server
+    confixx_user
+    confixx_password
+    confixx_server
+    backup
+    download
+    backup_download
+    new
+    ftp_login
+    confixx_login
+    login
+    waiter
+    errstr
+);
 can_ok($backup,@methods);
 
