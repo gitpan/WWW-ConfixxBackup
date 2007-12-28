@@ -24,3 +24,11 @@ Revision history for Perl extension WWW::ConfixxBackup.
 0.07  Tue Sep 18 11:11:11 2007
     - bugfix: ConfixxBackup.pm / now you can pass parameters to constructor
     - pod: fixed some typos in documentation
+
+0.08  Fri Dec 28 09:12:13 2007
+    + added new functionality:
+       + confixx_version
+       + available_confixx_versions
+       + default_confixx_version
+    + added new test:
+       + 08_confixx_version.t

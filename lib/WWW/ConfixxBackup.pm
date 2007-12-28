@@ -6,7 +6,7 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub new{
   my ($class,%args) = @_;
@@ -89,6 +89,21 @@ sub confixx_password{
   $self->{confixx_password} = $password if(defined $password);
   return $self->{confixx_password};
 }# confixx_pasword
+
+sub confixx_version{
+    my ($self,$version) = @_;
+    $self->{_confixx_version} = $version if defined $version;
+    return $self->{_confixx_version};
+}
+
+sub available_confixx_versions{
+    my ($self) = @_;
+    return WWW::ConfixxBackup::Confixx->available_confixx_versions;
+}
+
+sub default_confixx_version{
+    return WWW::ConfixxBackup::Confixx->default_version;
+}
 
 sub login{
   my ($self) = @_;
@@ -205,6 +220,7 @@ sub backup{
             $self->add_errstr('Can\'t login to Confixx' . $self->confixx_server);
   }
   if($self->{CONFIXX}){
+    $self->{CONFIXX}->confixx_version( $self->confixx_version );
     $self->{CONFIXX}->backup or
             $self->add_errstr('Can\'t create backup');
   }
@@ -245,6 +261,7 @@ WWW::ConfixxBackup - Create Backups with Confixx and download them via FTP
   $backup->confixx_password('confixx_password');
   $backup->confixx_server('confixx_server');
   $backup->confixx_login();
+  $backup->confixx_version( 'confixx3.0' );
   $backup->backup();
   $backup->download($path);
   $backup->waiter($seconds);
@@ -291,6 +308,25 @@ creates a new C<WWW::ConfixxBackup> object.
 
   $backup->confixx_server('confixx_server');
   print $backup->confixx_server();
+
+=head3 confixx_version
+
+  $backup->confixx_version( 'confixx3.0' );
+  print $backup->confixx_version;
+
+The parameters for the confixx script have been changed. Therefor you have to
+specify the version that is on your machine. To find out which version string
+you have to pass to C<confixx_version>, you should analyse the traffic, that
+is generated.
+
+=head3 available_confixx_versions
+
+returns a list of all confixx versions (to be precisely versions of tools_backup2.php) 
+that are supported by WWW::ConfixxBackup
+
+=head3 default_confixx_version
+
+returns the default value for confixx_version
 
 =head3 ftp_user
 

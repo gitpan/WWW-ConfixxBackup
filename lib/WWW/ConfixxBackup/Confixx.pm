@@ -8,6 +8,27 @@ use HTTP::Request;
 
 our $VERSION = '0.03';
 
+my %map = (
+  'confixx2.0' =>
+    {
+      backup_id    => '',
+      backup_html  => '',
+      backup_files => '',
+      backup_mysql => '',
+      html         =>  1,
+      files        =>  1,
+      mysql        =>  1,
+    },
+  'confixx3.0' =>
+    {
+      'selectAll' => 1,
+      'backup[]'  => ['html','files','mysql'],
+      action      => 'backup',
+      destination => '/backup',
+    }
+);
+my $default_version = 'confixx3.0';
+
 sub new{
   my ($class,%args) = @_;
   my $self = {};
@@ -16,6 +37,7 @@ sub new{
   $self->password($args{password});
   $self->user($args{user});
   $self->server($args{server});
+  $self->confixx_version( $args{confixx_version} || $default_version );
   
   return $self;
 }# new
@@ -34,23 +56,33 @@ sub login{
   return 1;
 }# login
 
+sub _detect_version{
+    my ($self) = @_;
+    
+    $self->mech->get( $self->server . '/user/' . $self->user . '/tools_backup.php' );
+    warn $self->mech->content;
+}
+
 sub backup{
   my ($self) = @_;
   $self->mech->post($self->server . '/user/' . $self->user . '/tools_backup2.php',
-                    {
-                      backup_id    => '',
-                      backup_html  => '',
-                      backup_files => '',
-                      backup_mysql => '',
-                      html         =>  1,
-                      files        =>  1,
-                      mysql        =>  1,
-                    }
-                  );
+        $map{$self->confixx_version},
+  );
   
   return 0 unless($self->mech->success);
   return 1;
 }# create_backup
+
+sub confixx_version{
+    my ($self,$version) = @_;
+    
+    $self->{__version} = $version if defined $version;
+    return $self->{__version};
+}
+
+sub available_confixx_versions{
+    return sort keys %map;
+}
 
 sub password{
   my ($self,$pwd) = @_;
@@ -86,6 +118,10 @@ sub mech{
   return $self->{mechanizer};
 }# mech
 
+sub default_version{
+    return $default_version;
+}
+
 sub mech_warnings{
   #print STDERR "HALLO";
 }# mech_warnings
@@ -119,6 +155,65 @@ WWW::ConfixxBackup::Confixx - the Confixx mechanism for WWW::ConfixxBackup
 =head2 mech
 
 =head2 login
+
+=head2 confixx_version
+
+=over 4
+
+=item * confixx2.0
+
+=over 4
+
+=item * backup_id
+
+=item * backup_html
+
+=item * backup_files
+
+=item * backup_mysql
+
+=item * html
+
+=item * files
+
+=item * mysql
+
+=back
+
+=item * confixx3.0
+
+=over 4
+
+=item * selectAll
+
+=item * backup[]
+
+=over 4
+
+=item * html
+
+=item * files
+
+=item * mysql
+
+=back
+
+=item * destination
+
+=item * action
+
+=back
+
+=back
+
+=head2 available_confixx_versions
+
+returns a list of all confixx versions (to be precisely versions of tools_backup2.php) 
+that are supported by WWW::ConfixxBackup
+
+=head2 default_version
+
+returns the default value for confixx_version
 
 =head1 SEE ALSO
 
