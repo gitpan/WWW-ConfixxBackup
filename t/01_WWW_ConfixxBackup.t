@@ -30,9 +30,15 @@ my @methods = qw(
     confixx_user
     confixx_password
     confixx_server
+    confixx_version
+    detect_version
+    http_proxy
+    file_prefix
     backup
     download
     backup_download
+    available_confixx_versions
+    default_confixx_version
     new
     ftp_login
     confixx_login

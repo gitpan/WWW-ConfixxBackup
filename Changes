@@ -32,3 +32,23 @@ Revision history for Perl extension WWW::ConfixxBackup.
        + default_confixx_version
     + added new test:
        + 08_confixx_version.t
+
+0.0801 Sat Dec 29 12:55:31 2007
+    + use binary mode for FTP transfer
+
+0.09  Wed Jan 02 13:36:13 2008
+    + added "file_prefix" to enable parallel downloads
+    + added "_detect_version" for automatic "confixx_version" detection (when confixx_version is not set)
+    + added tests:
+        * t/09_file_prefix.t
+        * t/10_check_can_ok.t
+        * t/11_can_ok_Confixx.t
+        * t/12_can_ok_FTP.t
+        * t/13_detect_version.t
+        * t/14_detect_version_2.t
+    + added debug() to WWW::ConfixxBackup, WWW::ConfixxBackup::Confixx, WWW::ConfixxBackup::FTP
+    + added DEBUG() to WWW::ConfixxBackup, WWW::ConfixxBackup::Confixx, WWW::ConfixxBackup::FTP
+    + added some debugging stuff
+
+0.10  Mon Nov 03 11:57:23
+    + fixed a bug in 06_*.t that caused the test to fail

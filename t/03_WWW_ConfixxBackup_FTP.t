@@ -21,13 +21,15 @@ ok($ftp->server eq 'server');
 ok($ftp->password eq 'password');
 
 my @methods = qw(
-                  new
-                  user
-                  server
-                  password
-                  download
-                  DESTROY
-                  ftp
-                );
+    new
+    user
+    server
+    login
+    password
+    prefix
+    download
+    DESTROY
+    ftp
+);
                 
 can_ok($ftp,@methods);

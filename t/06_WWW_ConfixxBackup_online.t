@@ -49,6 +49,7 @@ ok($backup->ftp_server eq $ftp_server);
 
 
 SKIP:{
+  skip "don't test the default value", 1 if $confixx_server eq $t_confixx_server;
   skip "no internet connection",1 unless($backup->login);
   
   ok($backup->login == 1);

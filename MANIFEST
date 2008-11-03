@@ -10,6 +10,12 @@ t/05_WWW_ConfixxBackup_FTP_online.t
 t/06_WWW_ConfixxBackup_online.t
 t/07_bugfix_20070918.t
 t/08_confixx_version.t
+t/09_file_prefix.t
+t/10_check_can_ok.t
+t/11_can_ok_Confixx.t
+t/12_can_ok_FTP.t
+t/13_detect_version.t
+t/14_detect_version_2.t
 t/97_manifest.t
 t/98_boilerplate.t
 t/99_pod.t

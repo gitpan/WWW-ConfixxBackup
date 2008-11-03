@@ -28,6 +28,8 @@ WriteMakefile(
                            Test::CheckManifest => 1.0,
                            Test::More          => 0,
                            FindBin             => 0,
+                           B                   => 0,
+                           Devel::Symdump      => 0,
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/WWW/ConfixxBackup.pm', # retrieve abstract from module
