@@ -30,6 +30,8 @@ my @methods = qw(
     download
     DESTROY
     ftp
+    debug
+    DEBUG
 );
                 
 can_ok($ftp,@methods);

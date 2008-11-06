@@ -18,6 +18,8 @@ my %methods = (
     prefix    => 1,
     ftp       => 1,
     DESTROY   => 1,
+    debug     => 1,
+    DEBUG     => 1,
 );
 
 my %check;

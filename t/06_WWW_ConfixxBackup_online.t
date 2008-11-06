@@ -16,7 +16,7 @@ ok(ref($backup) eq 'WWW::ConfixxBackup');
 
 my $t_user           = 'username';
 my $t_password       = 'password';
-my $t_confixx_server = 'confixx_server';
+my $t_confixx_server = 'http://confixx_server';
 my $t_ftp_server     = 'ftp_server';
 
 my %hash;

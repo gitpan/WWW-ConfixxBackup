@@ -1,6 +1,6 @@
 ---
 name:                WWW-ConfixxBackup
-version:             0.10
+version:             0.1001
 abstract:            Create Backups with Confixx and download them via FTP
 license:             perl
 generated_by:        ExtUtils::MakeMaker version 6.31
@@ -18,7 +18,7 @@ author:
 provides:
     WWW::ConfixxBackup:
         file: lib/WWW/ConfixxBackup.pm
-        version: 0.10
+        version: 0.1001
     WWW::ConfixxBackup::Confixx:
         file: lib/WWW/ConfixxBackup/Confixx.pm
         version: 0.05

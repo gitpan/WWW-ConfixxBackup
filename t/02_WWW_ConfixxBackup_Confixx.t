@@ -33,6 +33,8 @@ my @methods = qw(
     server
     mech
     proxy
+    debug
+    DEBUG
 );
 
 can_ok($confixx,@methods);

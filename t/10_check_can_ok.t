@@ -33,6 +33,8 @@ my %methods = (
     waiter            => 1,
     errstr            => 1,
     detect_version    => 1,
+    debug             => 1,
+    DEBUG             => 1,
 );
 
 my %check;

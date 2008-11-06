@@ -6,7 +6,7 @@ use warnings;
 use WWW::ConfixxBackup::Confixx;
 use WWW::ConfixxBackup::FTP;
 
-our $VERSION = '0.10';
+our $VERSION = '0.1001';
 
 sub new{
     my ($class,%args) = @_;

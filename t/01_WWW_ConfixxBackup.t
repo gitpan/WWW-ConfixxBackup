@@ -45,6 +45,8 @@ my @methods = qw(
     login
     waiter
     errstr
+    debug
+    DEBUG
 );
 can_ok($backup,@methods);
 

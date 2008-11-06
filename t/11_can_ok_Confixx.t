@@ -21,6 +21,8 @@ my %methods = (
     available_confixx_versions => 1,
     confixx_version            => 1,
     proxy                      => 1,
+    debug                      => 1,
+    DEBUG                      => 1,
 );
 
 my %check;

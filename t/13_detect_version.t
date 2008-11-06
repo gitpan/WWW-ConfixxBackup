@@ -6,9 +6,10 @@ use Test::More tests => 1;
 use WWW::ConfixxBackup::Confixx;
 
 my $content = do{ local $/, <DATA> };
-my $version = WWW::ConfixxBackup::Confixx->new->_detect_version( $content );
+my $obj     = WWW::ConfixxBackup::Confixx->new;
+$obj->_detect_version( $content );
 
-is $version, 'confixx3.0';
+is $obj->confixx_version, 'confixx3.0';
 
 __DATA__
 <HTML>
